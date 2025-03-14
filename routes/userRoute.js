@@ -44,15 +44,8 @@ route.get("/home",authentication,controller.getHome)
 route.get("/profileupdate",authentication,controller.renderEdit)
 route.get("/logout",controller.logout)
 
-route.post("/profileupdate", authentication, (req, res) => {
-    upload.single("profilePic")(req, res, (err) => {
-        if (err) {
-            return res.status(400).render("error", { errorMessage: "wrong password" });
-        }
-        controller.updateProfile(req, res);
-    });
-});
-// route.post("/profileupdate",upload.single("profilePic"),auth,controller.updateProfile)
+
+route.post("/profileupdate",upload.single("profilePic"),authentication,controller.updateProfile)
 route.post("/login",controller.loginUser)
 route.post("/signup",controller.registerUser)
 route.post("/profile", upload.single("profilePic"), authentication,controller.profileSetUp);

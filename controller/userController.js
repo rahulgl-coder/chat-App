@@ -5,7 +5,8 @@ const { render } = require("ejs")
 const Chat=require("../model/chat")
 const crypto=require("crypto")
 const nodemailer=require("nodemailer")
-
+const fs = require('fs');
+const path = require('path');
 require("dotenv").config()
 
 
@@ -216,34 +217,68 @@ const getHome=async (req,res)=>{
  }
 
 
- const updateProfile=async(req,res)=>{
-try {
-    const {bio,chatname}=req.body
+//  const updateProfile=async(req,res)=>{
+// try {
+//     const {bio,chatname}=req.body
 
-    const _id=await extractDataFromToken(req,res)
+//     const _id=await extractDataFromToken(req,res)
     
-    let updateFields = { chatname, bio };
+//     let updateFields = { chatname, bio };
 
-    if (req.file) {
-        updateFields.image = req.file.filename; 
-    }
+//     if (req.file) {
+//         updateFields.image = req.file.filename; 
+//     }
 
-    const updatedUser = await User.findOneAndUpdate(
-        { _id },
-        updateFields,
-        { new: true, runValidators: true }
-    );
-        res.redirect("/home")
+//     const updatedUser = await User.findOneAndUpdate(
+//         { _id },
+//         updateFields,
+//         { new: true, runValidators: true }
+//     );
+//         res.redirect("/home")
 
-    }
+//     }
         
   
 
-catch (error) {
-    return res.status(400).render("error", { errorMessage: "server error" });
-}}
+// catch (error) {
+//     return res.status(400).render("error", { errorMessage: "server error" });
+// }}
 
+const updateProfile = async (req, res) => {
+    try {
+        const { bio, chatname } = req.body;
+        const _id = await extractDataFromToken(req, res);
 
+        let updateFields = { chatname, bio };
+
+    
+        const user = await User.findById(_id);
+
+   
+        if (req.file) {
+           
+            if (user && user.image) {
+                const oldImagePath = path.join(__dirname, "../public/uploads", user.image);
+               if (fs.existsSync(oldImagePath)) {
+                    fs.unlinkSync(oldImagePath); 
+                }
+            }
+
+            updateFields.image = req.file.filename;
+        }
+
+        const updatedUser = await User.findOneAndUpdate(
+            { _id },
+            updateFields,
+            { new: true, runValidators: true }
+        );
+
+        res.redirect("/home");
+
+    } catch (error) {
+        return res.status(400).render("error", { errorMessage: "Server error" });
+    }
+};
 
 
 const logout=async(req,res)=>{
