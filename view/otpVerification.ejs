@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email OTP Verification</title>
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f2f5;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 800px;
+            width: 100%;
+        }
+        .left-panel {
+            background: linear-gradient(135deg, #00aaff, #007bff);
+            color: #fff;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .right-panel {
+            padding: 40px;
+            flex: 1;
+        }
+        .right-panel h2 {
+            margin-bottom: 20px;
+        }
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+        .btn {
+            width: 100%;
+            background-color: #00aaff;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #007bff;
+        }
+        .link-text {
+            margin-top: 15px;
+            text-align: center;
+        }
+        .link-text a {
+            color: #00aaff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            Verify Your Email
+        </div>
+        <div class="right-panel">
+            <h2>Email OTP Verification</h2>
+            <form action="/verify-otp/<%=user_id%>" method="POST">
+                <input type="text" class="input-field" placeholder="Enter OTP" name="otp" required>
+                <button type="submit" class="btn">Verify OTP</button>
+            </form>
+            <div class="link-text">
+                Didn't receive the OTP? <a href="/resend-otp">Resend OTP</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

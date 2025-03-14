@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Setup</title>
+    <link rel="stylesheet" href="/profileSetUp.css">
+   
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                const preview = document.getElementById('profilePreview');
+                preview.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Setup Your Profile</h2>
+        <form action="/profile" method="POST" enctype="multipart/form-data">
+
+            <label for="profilePic">Profile Picture:
+            <img id="profilePreview" class="profile-preview" src="https://via.placeholder.com/100" alt="">
+            <input type="file" name="profilePic" id="profilePic" accept="image/*" required onchange="previewImage(event)"hidden>
+        </label>
+            <label for="chatName">Chat Name:</label>
+            <input type="text" name="chatname" id="chatName" placeholder="Enter your chat name" required>
+            
+            <label for="bio">Bio:</label>
+            <textarea name="bio" id="bio" placeholder="Write something about yourself" required></textarea>
+            
+            <button type="submit">Save Profile</button>
+        </form>
+    </div>
+
+</body>
+</html>

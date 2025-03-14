@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <link rel="stylesheet" href="/home.css">
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  
+</head>
+<body>
+
+
+    <header class="header" style="display: flex;justify-content: space-between;">
+        <div>
+        <img style="width: 30px;height: 30px;" src="/phone_5051949.png" alt="">
+      
+    </div>
+    <h3 style="color: white;"><%=user.chatname%></h3>
+        <div class="profilee-container"> <a href="/profileupdate"><img id="profilepic" src="/uploads/<%= user.image %>" alt="" class="profile-pic"></a>
+            
+        <a href="/logout"> <button id="logOutBtn">Logout</button></a>   
+        </div>
+    </header>
+
+    
+
+    <div class="chat-container">
+        <div class="sidebar">
+            <input id="searchBar" type="text" placeholder="Search" class="search-bar">
+            <ul class="contacts">
+                <% contacts.forEach(contact => { %>
+                    <li class="contact" 
+                        data-name="<%= contact.chatname %>" 
+                        data-image="<%= contact.image %>"
+                        data-id="<%=contact.id%>">
+                        <img src="/uploads/<%= contact.image %>" alt="">
+                        <div>
+                            <h4><%= contact.chatname %></h4>
+                            <p><%= contact.lastMessage %></p>
+                        </div>
+                        <span class="message-count"><%= contact.unread %></span>
+                    </li>
+                <% }) %>
+            </ul>
+        </div>
+<div id="heroMain">
+        
+        <div class="chat-window2" id="chatWindow2" style="display: none;">
+            <div class="chat-header">
+               <a href=""><img id="activeUserImage" src="" alt="avatar"></a> 
+                <h3 id="activeUserName"></h3>
+                
+            </div>
+            <div class="chat-messages" id="messages"></div>
+            <div class="chat-input">
+                <input id="messageInput" type="text" placeholder="Type your message...">
+                <button id="btn">Send</button>
+            </div>
+        </div>
+
+
+        <div class="chat-window" id="chatWindow">
+            <div class="welcome-message" id="welcomeMessage" >
+                <h2>Welcome to ChatApp!</h2>
+                <p>Select a contact to start chatting.</p>
+                <div id="imddiv"> <img src="/3394897.jpg" alt="Chat Illustration"></div>
+               
+            </div>
+    </div>
+</div>
+   </div>
+   
+   
+   
+   <script>
+
+
+const socket=io()
+const currentUserId = "<%= user._id %>"; 
+socket.emit("join", currentUserId);
+
+
+
+const messagesContainer = document.getElementById("messages");
+
+    const contacts = document.querySelectorAll(".contact");
+    const chatWindow = document.getElementById("chatWindow2");
+    const activeUserImage = document.getElementById("activeUserImage");
+    const activeUserName = document.getElementById("activeUserName");
+    let  receiverId
+
+    contacts.forEach(contact => {
+        contact.addEventListener("click", async () => {
+          
+            const contactName = contact.getAttribute("data-name");
+            const contactImage = contact.getAttribute("data-image");
+            receiverId=contact.getAttribute("data-id")
+          
+            
+            activeUserImage.src = `/uploads/${contactImage}`;
+            activeUserName.textContent = contactName;
+
+            welcomeMessage.style.display = "none";
+            chatWindow.style.display = "flex";
+            const profileLink = document.querySelector(".chat-header a"); 
+            profileLink.href = `/profile/${receiverId}`;
+
+          
+            fetch(`/getMessages?user1=${currentUserId}&user2=${receiverId}`)
+            .then(response => response.json())
+            .then(messages => {
+                document.getElementById("messages").innerHTML = "";
+                messages.forEach(msg => {
+                    displayMessage(msg.message, msg.senderId === currentUserId ? "You" : "Friend");
+                });
+            });
+     
+          
+          
+        });
+    });
+    
+
+
+
+
+
+
+
+
+document.getElementById("btn").addEventListener("click", () => {
+    const messageInput = document.getElementById("messageInput");
+    const messageText = messageInput.value.trim();
+    if (!messageText) {
+        console.log("Message cannot be empty!");
+        return;  
+    }
+   if (!messageText || !receiverId) console.log("err");
+
+    socket.emit("privateMessage", {
+        senderId: currentUserId,
+        receiverId,
+        message: messageText
+    });
+
+    displayMessage(messageText, "You");
+
+    messageInput.value = "";
+});
+
+
+function displayMessage(message, sender) {
+    const messages = document.getElementById("messages");
+    const para = document.createElement("p");
+
+    para.classList.add("message"); 
+    para.classList.add(sender === "You" ? "sent" : "received"); 
+
+
+
+    para.innerText = ` ${message}`;
+    messages.appendChild(para);
+}
+socket.on("receiveMessage", ({ senderId, message }) => {
+  
+    if (senderId === receiverId ) {
+        displayMessage(message, activeUserName.textContent);
+    }
+});
+
+window.history.replaceState({}, document.title, "/home");
+
+ </script></body>
+ </html>
+
+
+
+
+
+ 

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Setup</title>
+    <link rel="stylesheet" href="/profileSetUp.css">
+   
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                const preview = document.getElementById('profilePreview');
+                preview.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+        const a=()=>{
+            console.log("hi this is clicked by aghil");
+            
+        }
+    </script>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Setup Your Profile</h2>
+        <form action="/profileupdate" method="POST" enctype="multipart/form-data">
+            <span class="close-icon" onclick="window.history.back();">&times;</span>
+
+            <label for="profilePic">Profile Picture:
+            <img id="profilePreview" class="profile-preview" src="/uploads/<%= user.image %>" alt="">
+            </label>
+            <input type="file" name="profilePic" id="profilePic" accept="image/*" onchange="previewImage(event)"hidden>
+            <label for="chatName">Chat Name:</label>
+            <input type="text" name="chatname" id="chatName" placeholder="Enter your chat name" value="<%=user.chatname%>" required>
+            
+            <label for="bio">Bio:</label>
+            <textarea name="bio" id="bio" placeholder="Write something about yourself" required><%=user.bio%></textarea>
+            
+            <button type="submit">Save changes</button>
+        </form>
+    </div>
+
+</body>
+</html>

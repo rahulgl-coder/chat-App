@@ -1,0 +1,35 @@
+
+<div class="chat-container">
+    <div class="sidebar">
+        <input type="text" placeholder="Search" class="search-bar">
+        <ul class="contacts">
+            <% contacts.forEach(contact => { %>
+                <li class="contact">
+                    <img src="<%= contact.image %>" alt="avatar">
+                    <div>
+                        <h4><%= contact.name %></h4>
+                        <p><%= contact.lastMessage %></p>
+                    </div>
+                    <span class="message-count"><%= contact.unread %></span>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+    <div class="chat-window">
+        <div class="chat-header">
+            <img src="<%= activeUser.image %>" alt="avatar">
+            <h3><%= activeUser.name %></h3>
+        </div>
+        <div class="chat-messages">
+            <% messages.forEach(msg => { %>
+                <div class="message <%= msg.sender === user ? 'sent' : 'received' %>">
+                    <p><%= msg.text %></p>
+                </div>
+            <% }) %>
+        </div>
+        <div class="chat-input">
+            <input type="text" placeholder="Type your message...">
+            <button>Send</button>
+        </div>
+    </div>
+</div>

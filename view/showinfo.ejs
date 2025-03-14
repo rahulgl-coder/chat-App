@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f2f5;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .profile-container {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            text-align: center;
+            width: 300px;
+            height: 50vh;
+            gap: 30px;
+            position: relative;
+        }
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #4CAF50;
+            margin-bottom: 15px;
+        }
+        .chatname {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin: 0 0 10px;
+        }
+        .chatbio{
+            font-size: 18px;
+            color: #777;
+            font-weight: bold;
+        }
+        .close-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: #777;
+            cursor: pointer;
+        }
+        .close-icon:hover {
+            color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <span class="close-icon" onclick="window.history.back();">&times;</span>
+        <img class="profile-pic" src="/uploads/<%= user.image %>" alt="Profile Picture">
+        <h2 class="chatname"><%= user.chatname %></h2>
+        <h3 class="chatbio"><%=user.bio%></h3>
+    </div>
+</body>
+</html>
