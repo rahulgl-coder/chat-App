@@ -9,10 +9,14 @@
 /* Body */
 body {
     background: #f5f5f5; /* Light background */
+    
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-size: 100%;
+    background-position: center;
+    background-image:url("https://images.pexels.com/photos/1097456/pexels-photo-1097456.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2") ;
 }
 
 /* Chat Container */
@@ -20,10 +24,11 @@ body {
     display: flex;
     width: 90%;
     height: 90vh;
-    background: white;
+    /* background: white; */
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+    margin-top: 100px;
 }
 
 /* Header */
@@ -32,8 +37,9 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 60px;
-    background: linear-gradient(to right, #044152, #0072ff);
+    height: 10%;
+    /* background: linear-gradient(to right, #044152, #0072ff); */
+    background-color: #0000007b;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -52,10 +58,11 @@ body {
 
 /* Profile Picture */
 .profile-pic {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     object-fit: cover;
+ border: 2px solid white;
 }
 
 /* Logout Button */
@@ -77,7 +84,7 @@ body {
 /* Sidebar */
 .sidebar {
     width: 25%;
-    background: #f0f0f0;
+    background: #00000029;
     padding: 20px;
     overflow-y: auto;
     display: flex;
@@ -105,16 +112,17 @@ body {
     align-items: center;
     gap: 10px;
     padding: 10px;
-    background: #ffffff;
+    background: #0000001f;
     border-radius: 10px;
     cursor: pointer;
     margin-bottom: 10px;
     transition: background 0.3s;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    color: white;
 }
 
 .contact:hover {
-    background: #e8f4ff;
+    background: #560c0c;
 }
 
 /* Contact Image */
@@ -122,6 +130,7 @@ body {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    border: 1px solid white;
 }
 
 /* Chat Window */
@@ -130,11 +139,11 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background: #ffffff;
+    background: #00000036;
     padding: 20px;
     border-radius: 15px;
     margin-top: 100px;
-    
+    box-shadow: 0px 5px 10px rgb(255, 255, 255);
 }
 .chat-window2{
     width: 100%;
@@ -143,13 +152,13 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    background: #ffffff;
+    background: #0000003b;
     padding: 20px;
     border-radius: 15px;
     /* margin: 20px 0px; */
     padding: 40px;
-    background-color: #bacfed;
-
+    
+    box-shadow: 0px 5px 10px rgb(255, 255, 255);
 }
 
 #heroMain{
@@ -163,7 +172,7 @@ body {
     align-items: center;
     gap: 10px;
     padding: 10px;
-    background: #f5f5f5;
+    background: #00000029;
     border-radius: 10px;
 }
 
@@ -172,6 +181,7 @@ body {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    border: 1px solid white;
 }
 
 /* Chat Messages */
@@ -222,18 +232,21 @@ body {
 .welcome-message h2 {
     font-size: 24px;
     margin-bottom: 10px;
-    color: #0072ff;
+    color:whitesmoke
 }
 
 .welcome-message p {
     font-size: 16px;
     margin-bottom: 20px;
+    color: #ccc;
 }
 
 .welcome-message img {
     width: 400px;
     height: 400px; /* Adjust image size */
     opacity: 0.8;
+    border-radius: 20px;
+    
 }
 #searchBar{
 margin-top: 22px;
@@ -256,7 +269,7 @@ margin-top: 22px;
 
 /* Sent messages (right-aligned) */
 .sent {
-    background-color: #0072ff;
+    background-color: red;
     color: white;
     align-self: flex-end;
     float: right;

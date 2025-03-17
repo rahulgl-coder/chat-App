@@ -18,7 +18,8 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req,file, cb) => {
-    const allowedTypes = ['image/jpeg', 'image/png'];
+    try {
+        const allowedTypes = ['image/jpeg', 'image/png'];
     if (allowedTypes.includes(file.mimetype)) {
         cb(null, true); 
     } else {
@@ -26,6 +27,10 @@ const fileFilter = (req,file, cb) => {
        
         
     }
+    } catch (error) {
+        
+    }
+    
 };
 
 const upload = multer({ 
@@ -43,7 +48,8 @@ route.get("/profile/:id",authentication,controller.viewProfile)
 route.get("/home",authentication,controller.getHome)
 route.get("/profileupdate",authentication,controller.renderEdit)
 route.get("/logout",controller.logout)
-
+route.get("/verify-otp",checkAuth,controller.renderOtp)
+route.get("/profile",authentication,controller.renderProfile)
 
 route.post("/profileupdate",upload.single("profilePic"),authentication,controller.updateProfile)
 route.post("/login",controller.loginUser)

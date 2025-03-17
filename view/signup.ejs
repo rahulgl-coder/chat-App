@@ -27,20 +27,20 @@
 
 
     <script>
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-        }
+    //     function getCookie(name) {
+    //         const value = `; ${document.cookie}`;
+    //         const parts = value.split(`; ${name}=`);
+    //         if (parts.length === 2) return parts.pop().split(';').shift();
+    //     }
     
-        const token = getCookie('token'); 
-        if (token) {
-            window.location.href = '/home'; 
-        }
-        window.history.pushState(null, "", window.location.href);
-    window.onpopstate = function () {
-        window.history.pushState(null, "", window.location.href); 
-    };
+    //     const token = getCookie('token'); 
+    //     if (token) {
+    //         window.location.href = '/home'; 
+    //     }
+    //     window.history.pushState(null, "", window.location.href);
+    // window.onpopstate = function () {
+    //     window.history.pushState(null, "", window.location.href); 
+    // };
     </script>
 </body>
 </html>

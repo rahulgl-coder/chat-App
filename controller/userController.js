@@ -62,8 +62,7 @@ const registerUser=async(req,res)=>{
 
              await sendOtp(email,otp)
 
-            const existingUser = await User.findOne({email})
-           res.render("otpVerification",{user_id:existingUser._id})
+             res.redirect(`/verify-otp?userId=${newUser._id}`);
  }
 
         } catch (error) {
@@ -105,9 +104,9 @@ const sendOtp=async(email,otp)=>{
 }
 
 const otpVerification=async(req,res)=>{
-
-    const id =req.params.id
-    const otp=req.body.otp
+  const id=req.params.id
+  
+   const otp=req.body.otp
 try {
 
     const user=await User.findById(id)
@@ -115,7 +114,8 @@ try {
      await User.findByIdAndUpdate(id,{$unset:{otp:1,otpExpires:1}},{new:true})
         
      await createToken(user,res)
-     res.render("profileSetUp")
+ 
+    res.redirect("/profile")
 }
 
     
@@ -126,7 +126,30 @@ try {
       }
 
 
+const renderOtp=async(req,res)=>{
 
+try {
+
+    const userId = req.query.userId;
+    res.render("otpVerification",{id:userId})
+    
+} catch (error) {
+    return res.status(400).render("error", { errorMessage: "Server error" });
+}
+
+
+
+}
+const renderProfile=async(req,res)=>{
+try {
+    res.render("profileSetUp")
+} catch (error) {
+    
+}
+
+
+
+}
 
 
 const profileSetUp=async(req,res)=>{
@@ -317,5 +340,7 @@ module.exports = {signUp,
     renderEdit,
     updateProfile,
     logout,
-    otpVerification
-}
+    otpVerification,
+    renderOtp,
+    renderProfile
+    }

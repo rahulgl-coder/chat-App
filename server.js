@@ -9,12 +9,13 @@ const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const dBConnect = require("./dbConnection/connect");
 const userRoute = require("./routes/userRoute");
-// const chatRoute = require("./routes/chatRoute");
+const chatRoute = require("./routes/chatRoute");
 const Chat=require("./model/chat")
-
+const app = express();
 dotenv.config();
 
-const app = express();
+
+
 const server = http.createServer(app); 
 const io = socketIo(server, {
     cors: {
@@ -30,7 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(userRoute);
-// app.use(chatRoute)
+app.use(chatRoute)
 
 
 dBConnect();
@@ -68,24 +69,7 @@ io.on("connection", (socket) => {
     });
 });
 
-app.get("/getMessages", async (req, res) => {
-    const { user1, user2 } = req.query;
-    try {
-        const messages = await Chat.find({
-            $or: [
-                { senderId: user1, receiverId: user2 },
-                { senderId: user2, receiverId: user1 }
-            ]
-        }).sort({ createdAt: 1 });
 
-        res.json(messages);
-      
-        
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Failed to fetch messages" });
-    }
-});
 
 
 const PORT = process.env.PORT || 8080;

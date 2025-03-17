@@ -49,7 +49,7 @@
         <div class="chat-window2" id="chatWindow2" style="display: none;">
             <div class="chat-header">
                <a href=""><img id="activeUserImage" src="" alt="avatar"></a> 
-                <h3 id="activeUserName"></h3>
+                <h3 style="color: white;" id="activeUserName"></h3>
                 
             </div>
             <div class="chat-messages" id="messages"></div>
@@ -64,7 +64,7 @@
             <div class="welcome-message" id="welcomeMessage" >
                 <h2>Welcome to ChatApp!</h2>
                 <p>Select a contact to start chatting.</p>
-                <div id="imddiv"> <img src="/3394897.jpg" alt="Chat Illustration"></div>
+                <div id="imddiv"> <img src="https://pngteam.com/images/chat-png-360x360_6a4db7cf_transparent_202115.png.png" alt="Chat Illustration"></div>
                
             </div>
     </div>
@@ -132,6 +132,7 @@ const messagesContainer = document.getElementById("messages");
 document.getElementById("btn").addEventListener("click", () => {
     const messageInput = document.getElementById("messageInput");
     const messageText = messageInput.value.trim();
+    
     if (!messageText) {
         console.log("Message cannot be empty!");
         return;  
@@ -153,7 +154,7 @@ document.getElementById("btn").addEventListener("click", () => {
 function displayMessage(message, sender) {
     const messages = document.getElementById("messages");
     const para = document.createElement("p");
-
+    
     para.classList.add("message"); 
     para.classList.add(sender === "You" ? "sent" : "received"); 
 
@@ -161,6 +162,9 @@ function displayMessage(message, sender) {
 
     para.innerText = ` ${message}`;
     messages.appendChild(para);
+    
+    
+
 }
 socket.on("receiveMessage", ({ senderId, message }) => {
   
@@ -168,8 +172,7 @@ socket.on("receiveMessage", ({ senderId, message }) => {
         displayMessage(message, activeUserName.textContent);
     }
 });
-
-window.history.replaceState({}, document.title, "/home");
+// window.history.replaceState({}, document.title, "/home");
 
  </script></body>
  </html>

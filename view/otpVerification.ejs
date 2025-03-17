@@ -77,7 +77,9 @@
         </div>
         <div class="right-panel">
             <h2>Email OTP Verification</h2>
-            <form action="/verify-otp/<%=user_id%>" method="POST">
+            <form action="/verify-otp/<%=id%>" method="POST">
+
+               
                 <input type="text" class="input-field" placeholder="Enter OTP" name="otp" required>
                 <button type="submit" class="btn">Verify OTP</button>
             </form>
